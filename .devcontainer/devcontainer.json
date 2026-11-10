@@ -1,0 +1,15 @@
+{
+  // Lab harness (dummy): a Codespace that runs only the lab agent and is never opened in an editor.
+  // The book's site creates it through the GitHub API, waits for the agent, and talks to it on port 8080.
+  "name": "Air Interface lab harness",
+  // The universal image is cached on Codespaces hosts, so a test Codespace starts fast. The real lab will use
+  // its own image with srsRAN built in.
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "hostRequirements": { "cpus": 2 },
+  "forwardPorts": [8080],
+  "portsAttributes": { "8080": { "label": "lab agent", "onAutoForward": "silent" } },
+  // Sites whose pages may call the agent (CORS). The local book is http://localhost:5180.
+  "containerEnv": { "LAB_ORIGINS": "http://localhost:5180" },
+  // Runs on every start, including a resume: start the agent, then make its port public.
+  "postStartCommand": "bash .devcontainer/lab-agent.sh start"
+}
